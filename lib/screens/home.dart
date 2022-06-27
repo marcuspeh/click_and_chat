@@ -1,5 +1,7 @@
 import 'package:click_and_chat/api/api.dart';
+import 'package:click_and_chat/screens/shop.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,7 +38,25 @@ class Home extends StatelessWidget {
     removeOneChat();
   }
 
-  Widget getBody() {    
+  Widget linkToShop(BuildContext context) {    
+    TextStyle linkStyle = TextStyle(color: Colors.blue);
+    return RichText(
+      text: TextSpan(
+        style: linkStyle,
+        text: "Click here to buy more",
+        recognizer: TapGestureRecognizer()
+        ..onTap = () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => ShopView(),
+            ),
+          );
+        }
+      )
+    );
+  }
+
+  Widget getBody(BuildContext context) {    
     return Scaffold(
       body: 
         Padding(
@@ -131,6 +151,7 @@ class Home extends StatelessWidget {
                     ]
                   ),
                 ),
+                linkToShop(context)
               ],
             )
         )
@@ -141,7 +162,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) => FutureBuilder(
     future: isCheckLeft(),
     builder: (context, snapshot) {
-      return getBody();
+      return getBody(context);
     },
   );
 }
