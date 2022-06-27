@@ -61,6 +61,8 @@ class Home extends StatelessWidget {
                     ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center, 
                   children: [
                     Container(
                       margin: const EdgeInsets.all(15.0),
