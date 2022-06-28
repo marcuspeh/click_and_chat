@@ -11,6 +11,7 @@ class ShopView extends StatelessWidget {
   String countryCode = "65";
   final textInputController = TextEditingController();
   final chatsLeft = ValueNotifier<int>(0);
+  
 
   Future<void> isCheckLeft() async {
     final prefs = await SharedPreferences.getInstance();
@@ -26,7 +27,7 @@ class ShopView extends StatelessWidget {
     prefs.setInt('chatsLeft', chatsLeft.value);
   }
 
-  Widget getPriceRow(int n, double cost) {
+  Widget getPriceRow(int n, double cost, double width) {
     String chatsHeader;
     String chatsPrice;
 
@@ -43,24 +44,31 @@ class ShopView extends StatelessWidget {
     }
     
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center, 
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 100),
-          child: 
-            Text(
-              chatsHeader,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14)
+    return Padding(
+      padding: EdgeInsets.only(left: width, right: width),
+      child: 
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center, 
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              child: 
+                Text(
+                  chatsHeader,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(fontSize: 14)
+                ),
             ),
-        ),
-        ElevatedButton (  
-          child: Text(chatsPrice, style: TextStyle(fontSize: 20),),  
-          onPressed: () => addChat(n, cost)
-        ),
-      ]
+            ElevatedButton (  
+              child: Text(chatsPrice, style: TextStyle(fontSize: 20)),  
+              onPressed: () => addChat(n, cost),
+              style: ElevatedButton.styleFrom(
+                  minimumSize: Size(width, 35) // put the width and height you want
+                ),
+            ),
+          ]
+        )
     );
   }
 
@@ -83,7 +91,8 @@ class ShopView extends StatelessWidget {
     );
   }
   
-  Widget getBody(BuildContext context) {    
+  Widget getBody(BuildContext context) {  
+    double buttonWidth = MediaQuery.of(context).size.width / 5;  
     return Scaffold(
       body: 
         Padding(
@@ -98,11 +107,11 @@ class ShopView extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                getPriceRow(1, 0.00),
-                getPriceRow(10, 0.99),
-                getPriceRow(25, 1.99),
-                getPriceRow(50, 3.99),
-                getPriceRow(100, 6.99),
+                getPriceRow(1, 0.00, buttonWidth),
+                getPriceRow(10, 0.99, buttonWidth),
+                getPriceRow(25, 1.99, buttonWidth),
+                getPriceRow(50, 3.99, buttonWidth),
+                getPriceRow(100, 6.99, buttonWidth),
                 Padding(
                   padding: EdgeInsets.only(top: 5, bottom: 5),
                   child:  

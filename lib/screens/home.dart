@@ -32,9 +32,9 @@ class Home extends StatelessWidget {
 
   void _launchUrl() async {
     String urlLink = PHONE_URL + countryCode + textInputController.text;
-    // if (!await launchUrl(Uri.parse(urlLink), mode: LaunchMode.externalApplication)) {
-    //   throw 'Could not launch';
-    // }
+    if (!await launchUrl(Uri.parse(urlLink), mode: LaunchMode.externalApplication)) {
+      throw 'Could not launch';
+    }
     removeOneChat();
   }
 
