@@ -1,0 +1,6 @@
+{
+  "appTitle": "click_and_chat",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
